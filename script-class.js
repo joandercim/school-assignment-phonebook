@@ -33,6 +33,13 @@ class PhoneBook {
     } else if (field === 'phone') {
       document.getElementById('error-msg').textContent =
         'Du måste fylla i ett telefonnummer.';
+    } else if (field === 'number') {
+      document.getElementById('error-msg').textContent =
+        'Telefonnummer har inga faktiskt bokstäver.';
+      setTimeout(() => {
+        document.getElementById('error-msg').innerHTML =
+        `Telefonnummer har inga faktiskt bokstäver. <br>FAKTISKT.`;
+      }, 2000);
     }
   }
 
@@ -54,7 +61,14 @@ class PhoneBook {
       missingInfo = 'phone';
       this.alert(missingInfo);
       return;
-    } else {
+    } else if (isNaN(phone.value)) {
+      missingInfo = 'number';
+      this.alert(missingInfo);
+      return;
+    }
+    
+    
+    {
       return true;
     }
   }

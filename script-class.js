@@ -4,6 +4,7 @@ const editBtn = document.getElementById('edit');
 const deleteBtn = document.getElementById('delete');
 const clearAllBtn = document.getElementById('clear');
 const submitBtn = document.querySelector('form button');
+const alertEl = document.getElementById('alert');
 
 class PhoneBook {
   constructor() {
@@ -16,6 +17,46 @@ class PhoneBook {
       .addEventListener('submit', this.getInput.bind(this));
     ul.addEventListener('click', this.onClickEvent.bind(this));
     clearAllBtn.addEventListener('click', this.clearAll.bind(this));
+    document
+      .getElementById('alert-btn')
+      .addEventListener('click', this.hideAlert.bind(this));
+  }
+
+  alert(field) {
+    alertEl.style.display = 'flex';
+    if (field === 'both') {
+      document.getElementById('error-msg').textContent =
+        'Du måste fylla i någonting.';
+    } else if (field === 'name') {
+      document.getElementById('error-msg').textContent =
+        'Du måste fylla i ett namn.';
+    } else if (field === 'phone') {
+      document.getElementById('error-msg').textContent =
+        'Du måste fylla i ett telefonnummer.';
+    }
+  }
+
+  hideAlert() {
+    alertEl.style.display = 'none';
+  }
+
+  chkInput(name, phone) {
+    let missingInfo;
+    if (name.value === '' && phone.value === '') {
+      missingInfo = 'both';
+      this.alert(missingInfo);
+      return;
+    } else if (name.value === '') {
+      missingInfo = 'name';
+      this.alert(missingInfo);
+      return;
+    } else if (phone.value === '') {
+      missingInfo = 'phone';
+      this.alert(missingInfo);
+      return;
+    } else {
+      return true;
+    }
   }
 
   getInput(e) {
@@ -23,10 +64,9 @@ class PhoneBook {
     const name = document.getElementById('name');
     const phone = document.getElementById('phone');
 
-    // if (name.value === '' || phone.value === '') {
-    //   alert('Fill in all field');
-    //   return;
-    // }
+    if (!this.chkInput(name, phone)) {
+      return;
+    }
 
     const contact = new Contact(name.value, phone.value);
 
@@ -84,7 +124,7 @@ class PhoneBook {
   clearAll(e) {
     e.preventDefault();
     while (ul.children.length > 0) {
-      ul.firstChild.remove();
+          ul.lastChild.remove();
     }
   }
 }
@@ -98,10 +138,3 @@ class Contact {
 }
 
 const phoneBook = new PhoneBook();
-
-const contact1 = new Contact('John Doe', '0735-264254');
-const contact2 = new Contact('Jane Doe', '0735-264254');
-const contact3 = new Contact('Johnny Doe', '0735-264254');
-const contact4 = new Contact('Missy Doe', '0735-264254');
-
-const phoneBookArrayTEMP = [contact1, contact2, contact3, contact4];

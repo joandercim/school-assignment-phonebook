@@ -3,7 +3,7 @@ const ul = document.querySelector('.my-contacts');
 const editBtn = document.getElementById('edit');
 const deleteBtn = document.getElementById('delete');
 const clearAllBtn = document.getElementById('clear');
-const submitBtn = document.querySelector('form button')
+const submitBtn = document.querySelector('form button');
 
 class PhoneBook {
   constructor() {
@@ -37,63 +37,56 @@ class PhoneBook {
   }
 
   createNewContact(contact) {
-    
-    // const { name, phone, id } = contact;
-    // li.innerHTML = `
-    //               <input type="text" value="${name}" name="name-${id}" id="name-${id}" disabled>
-    //               <input type="text" value="${phone}" name="phone-${id}" id="phone-${id}" disabled>
-    //               <button class="edit" id="${id}">Ändra</button>            
-    //               <button class="delete" id="delete">Radera</button>   
-    //           `;
+    const { name, phone, id } = contact;
+    const li = document.createElement('li');
+    li.innerHTML = `
+                  <input type="text" value="${name}" name="name-${id}" id="name-${id}" disabled>
+                  <input type="text" value="${phone}" name="phone-${id}" id="phone-${id}" disabled>
+                  <i class="fa-solid fa-edit edit show" id="${id}"></i>            
+                  <i class="fa-solid fa-trash delete show" id="delete"></i>   
+              `;
 
-    //   ul.append(li);
-      
-      // ####### TEMPORARY CONTACTS ####### //
+    ul.append(li);
 
-      phoneBookArrayTEMP.forEach(contact => {
-        const li = document.createElement('li');
-          const { name, phone, id } = contact;
-          li.innerHTML = `
-                        <input type="text" value="${name}" name="name-${id}" id="name-${id}" disabled>
-                        <input type="text" value="${phone}" name="phone-${id}" id="phone-${id}" disabled>
-                        <button class="edit" id="${id}">Ändra</button>            
-                        <button class="delete" id="delete">Radera</button>   
-                    `;
-      
-            ul.append(li);
-      })
-
+    setTimeout(() => {
+      li.classList.add('show');
+    }, 10);
   }
 
   updateContact(target) {
     if (!isEditMode) {
       target.children[0].removeAttribute('disabled');
       target.children[1].removeAttribute('disabled');
-      target.children[2].textContent = 'Spara';
+      target.children[2].classList.replace('fa-edit', 'fa-save');
       isEditMode = true;
     } else {
       target.children[0].setAttribute('value', target.children[0].value);
       target.children[1].setAttribute('value', target.children[1].value);
       target.children[0].setAttribute('disabled', true);
       target.children[1].setAttribute('disabled', true);
-      target.children[2].textContent = 'Ändra';
+      target.children[2].classList.replace('fa-save', 'fa-edit');
       isEditMode = false;
     }
   }
 
   onClickEvent(e) {
-    if (e.target.className === 'edit') {
+    if (e.target.classList.contains('edit')) {
       this.updateContact(e.target.parentElement);
-    } else if (e.target.className === 'delete') {
-      e.target.parentElement.remove();
+    } else if (e.target.classList.contains('delete')) {
+      e.target.parentElement.classList.remove('show');
+      e.target.classList.remove('show');
+      setTimeout(() => {
+        e.target.parentElement.remove();
+      }, 505);
     }
   }
 
-  clearAll() {
+  clearAll(e) {
+    e.preventDefault();
     while (ul.children.length > 0) {
-      ul.firstElementChild.remove();
+      ul.firstChild.remove();
     }
-    }
+  }
 }
 
 class Contact {
@@ -106,11 +99,9 @@ class Contact {
 
 const phoneBook = new PhoneBook();
 
-const contact1 = new Contact('John Doe', '0735-264254')
-const contact2 = new Contact('Jane Doe', '0735-264254')
-const contact3 = new Contact('Johnny Doe', '0735-264254')
-const contact4 = new Contact('Missy Doe', '0735-264254')
+const contact1 = new Contact('John Doe', '0735-264254');
+const contact2 = new Contact('Jane Doe', '0735-264254');
+const contact3 = new Contact('Johnny Doe', '0735-264254');
+const contact4 = new Contact('Missy Doe', '0735-264254');
 
-const phoneBookArrayTEMP = [contact1, contact2, contact3, contact4]
-
-console.log(phoneBookArrayTEMP);
+const phoneBookArrayTEMP = [contact1, contact2, contact3, contact4];

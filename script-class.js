@@ -9,6 +9,7 @@ const alertEl = document.getElementById('alert');
 class PhoneBook {
   constructor() {
     this.loadEventListeners();
+    this.updateUI();
   }
 
   loadEventListeners() {
@@ -35,10 +36,11 @@ class PhoneBook {
         'Du måste fylla i ett telefonnummer.';
     } else if (field === 'number') {
       document.getElementById('error-msg').textContent =
-        'Telefonnummer har inga faktiskt bokstäver.';
+        'Telefonnummer får bara bestå av siffor.';
       setTimeout(() => {
-        document.getElementById('error-msg').innerHTML =
-        `Telefonnummer har inga faktiskt bokstäver. <br>FAKTISKT.`;
+        document.getElementById(
+          'error-msg'
+        ).innerHTML = `Telefonnummer har inga faktiskt bokstäver. <br>FAKTISKT.`;
       }, 2000);
     }
   }
@@ -66,11 +68,7 @@ class PhoneBook {
       this.alert(missingInfo);
       return;
     }
-    
-    
-    {
-      return true;
-    }
+    return true;
   }
 
   getInput(e) {
@@ -88,6 +86,35 @@ class PhoneBook {
     phone.value = '';
 
     this.createNewContact(contact);
+    this._saveContactToStorage(contact);
+  }
+
+  _saveContactToStorage(contact) {
+    let contactsInStorage = this._getContactsFromStorage();
+    contactsInStorage.push(contact);
+    localStorage.setItem('contacts', JSON.stringify(contactsInStorage));
+  }
+
+  _getContactsFromStorage() {
+    let contactsInStorage;
+    if (localStorage.getItem('contacts') !== null) {
+      contactsInStorage = JSON.parse(localStorage.getItem('contacts'));
+    } else {
+      contactsInStorage = [];
+    }
+    return contactsInStorage;
+  }
+
+  _deleteContactFromStorage(id) {
+    let contactsInStorage = this._getContactsFromStorage();
+    const index = contactsInStorage.findIndex(contact => contact.id === id);
+    contactsInStorage.splice(index, 1);
+    localStorage.setItem('contacts', JSON.stringify(contactsInStorage));
+  }
+
+  _displayContactsFromStorage() {
+    const contactsInStorage = this._getContactsFromStorage();
+    contactsInStorage.forEach(contact => this.createNewContact(contact))
   }
 
   createNewContact(contact) {
@@ -132,14 +159,20 @@ class PhoneBook {
       setTimeout(() => {
         e.target.parentElement.remove();
       }, 505);
+      this._deleteContactFromStorage(e.target.previousElementSibling.id);
     }
   }
 
   clearAll(e) {
     e.preventDefault();
     while (ul.children.length > 0) {
-          ul.lastChild.remove();
+      ul.lastChild.remove();
     }
+    localStorage.clear();
+  }
+
+  updateUI() {
+    this._displayContactsFromStorage();
   }
 }
 

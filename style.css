@@ -183,3 +183,21 @@ li.show {
     margin: .3rem 0;
     padding: .5rem;
 }
+
+i.fa-solid.about {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    border: 1px solid;
+    padding: .5rem;
+    width: 2rem;
+    height: 2rem;
+    text-align: center;
+    line-height: .8;
+    border-radius: 50%;
+    opacity: .3;
+}
+
+i.fa-solid.about:hover {
+    opacity: 1;
+}

@@ -102,7 +102,22 @@ class PhoneBook {
     } else {
       contactsInStorage = [];
     }
-    return contactsInStorage;
+
+    let sortedArray = contactsInStorage.sort((a, b) => {
+      var nameA = a.name.toUpperCase();
+      var nameB = b.name.toUpperCase();
+      
+      if (nameA < nameB) {
+        return -1;
+      } else if (nameA > nameB) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    return sortedArray;
+
   }
 
   _deleteContactFromStorage(id) {

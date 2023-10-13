@@ -162,7 +162,6 @@ li {
     overflow: hidden;
     background-color:var(--white);
     height: 0;
-    width: 27rem;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
     padding: 0 .5rem;
 }

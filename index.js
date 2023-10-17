@@ -99,21 +99,18 @@ class PhoneBook {
     
     if (!isEditMode) {
       target.classList.add('edit-mode');
+      // Make enter key-accept changes
       document
         .querySelector('.edit-mode')
         .addEventListener('keyup', (e) =>
-          e.key === 'Enter' ? btn.click() : null
-        );
+          e.key === 'Enter' && btn.click());
       name.removeAttribute('disabled');
       phone.removeAttribute('disabled');
       btn.classList.replace('fa-edit', 'fa-save');
       isEditMode = true;
     } else {
 
-      if (!this.chkInput(name, phone)) {
-        const response = this.chkInput(name, phone);
-        return;
-      }
+      if (!this.chkInput(name, phone)) return;
 
       const updatedContact = {
         name: name.value,

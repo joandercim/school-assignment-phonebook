@@ -16,12 +16,7 @@ class Alerts {
         'Du måste fylla i ett telefonnummer.';
     } else if (field === 'number') {
       document.getElementById('error-msg').textContent =
-        'Telefonnummer får bara bestå av siffor.';
-      setTimeout(() => {
-        document.getElementById(
-          'error-msg'
-        ).innerHTML = `Telefonnummer har faktiskt inga bokstäver. <br>FAKTISKT.`;
-      }, 2000);
+        'Endast siffror och bindestreck tillåtet i telefonnummer.';
     }
   }
 
@@ -35,11 +30,11 @@ class Alerts {
         e.target.classList.remove('warning');
       }
     }
-    }
-    
-    static hideAlert() {
-        alertEl.style.display = 'none';
-      }
+  }
+
+  static hideAlert() {
+    alertEl.style.display = 'none';
+  }
 }
 
 export default Alerts;

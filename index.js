@@ -44,7 +44,7 @@ class PhoneBook {
       missingInfo = 'phone';
       Alerts.mainAlert(missingInfo);
       return;
-    } else if (isNaN(phone.value)) {
+    } else if (!/^[0-9-]+$/.test(phone.value)) {
       missingInfo = 'number';
       Alerts.mainAlert(missingInfo);
       return;

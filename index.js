@@ -33,20 +33,16 @@ class PhoneBook {
     let missingInfo;
 
     if (name.value === '' && phone.value === '') {
-      missingInfo = 'both';
-      Alerts.mainAlert(missingInfo);
+      Alerts.mainAlert('both');
       return;
     } else if (name.value === '') {
-      missingInfo = 'name';
-      Alerts.mainAlert(missingInfo);
+      Alerts.mainAlert('name');
       return;
     } else if (phone.value === '') {
-      missingInfo = 'phone';
-      Alerts.mainAlert(missingInfo);
+      Alerts.mainAlert('phone');
       return;
     } else if (!/^[0-9-]+$/.test(phone.value)) {
-      missingInfo = 'number';
-      Alerts.mainAlert(missingInfo);
+      Alerts.mainAlert('number');
       return;
     }
     return true;
@@ -57,10 +53,8 @@ class PhoneBook {
     const name = document.getElementById('name');
     const phone = document.getElementById('phone');
 
-    if (!this.chkInput(name, phone)) {
-      return;
-    }
-
+    if (!this.chkInput(name, phone)) return;
+  
     const contact = new Contact(name.value, phone.value);
 
     name.value = '';

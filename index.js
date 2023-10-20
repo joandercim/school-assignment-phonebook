@@ -30,8 +30,6 @@ class PhoneBook {
   }
 
   chkInput(name, phone) {
-    let missingInfo;
-
     if (name.value === '' && phone.value === '') {
       Alerts.mainAlert('both');
       return;
@@ -52,7 +50,8 @@ class PhoneBook {
     e.preventDefault();
     const name = document.getElementById('name');
     const phone = document.getElementById('phone');
-
+    
+    // Validate input
     if (!this.chkInput(name, phone)) return;
   
     const contact = new Contact(name.value, phone.value);
